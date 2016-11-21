@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Camera : MonoBehaviour {
+public class CameraController : MonoBehaviour {
 
 	private Transform target;
 
@@ -20,5 +20,23 @@ public class Camera : MonoBehaviour {
 		transform.LookAt (target.transform);
 		transform.rotation = target.transform.rotation;
 	}
-		
+	
+
+
+//	public GameObject player;
+//
+//	private Vector3 offset;
+//
+//	void Start () {
+//		offset = transform.position - player.transform.position;
+//	}
+//
+//	void LateUpdate () {
+//		transform.position = player.transform.position + offset;
+//		transform.LookAt(player.transform);
+//
+//	}
+
+
+
 }

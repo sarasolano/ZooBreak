@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour {
 
@@ -16,7 +18,6 @@ public class PlayerController : MonoBehaviour {
 	Animator anim;
 	Rigidbody2D rb;
 
-
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -30,17 +31,32 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other){
+		//if you fall off the screen
+		if (other.CompareTag ("Border")) {
+			Debug.Log("you ded start level over");
+		}
+
+		if (other.CompareTag ("Lock")) {
+			Debug.Log ("collided with lock");
+			GameManager.Instance.currHint += 1;
+			SceneManager.LoadScene ("Unscramble4");
+
+
+		}
+	
+	}
+
 	// Update is called once per frame
 	void FixedUpdate () {
+		//make the character move 
+		float move = Input.GetAxis ("Horizontal");
+		anim.SetFloat("Speed", Mathf.Abs(move));
+
+		//make the character jump
 		ground = Physics2D.OverlapCircle (isGround.position, grRadius, wiGround);
 		anim.SetBool ("Ground", ground);
 		anim.SetFloat ("vSpeed", rb.velocity.y);
-
-		//make the character move 
-		float move = Input.GetAxis ("Horizontal");
-
-		anim.SetFloat("Speed", Mathf.Abs(move));
-
 		rb.velocity = new Vector2 (move * maxSpeed, rb.velocity.y);
 
 		//check which direction the character is facing
@@ -49,8 +65,6 @@ public class PlayerController : MonoBehaviour {
 		} else if (move < 0 && right) {
 			Flip ();
 		}
-	
-
 	}
 
 	void Flip() {
