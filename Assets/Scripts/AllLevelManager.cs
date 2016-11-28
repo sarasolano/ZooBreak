@@ -11,5 +11,7 @@ public class AllLevelManager  {
 	public static bool level5Over = false;
 	public static bool level6Over = false;
 
+	public static int avatar = 1;
+
 }
 	
