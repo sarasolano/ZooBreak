@@ -6,7 +6,7 @@ public class Hippo : MonoBehaviour {
 	public Transform endPos;
 	private Vector3 startPt;
 	private Vector3 endPt;
-	private float secondsForOneLength = 10f;
+	private float secondsForOneLength = 6.0f;
 
 	void Start()
 	{

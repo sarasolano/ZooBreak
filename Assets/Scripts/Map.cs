@@ -18,29 +18,29 @@ public class Map : MonoBehaviour {
 
 
 
-		if (!LevelManager.level1Over) {
+		if (!AllLevelManager.level1Over) {
 			Lock_lev1.onClick.AddListener (() =>
 				SceneManager.LoadScene ("Level1"));
 		}
-		if (LevelManager.level1Over && !LevelManager.level2Over) {
+		if (AllLevelManager.level1Over && !AllLevelManager.level2Over) {
 			Level1Over ();
 			Lock_lev2.onClick.AddListener (() =>
 				SceneManager.LoadScene ("Level2"));
 		}
-		if (LevelManager.level1Over && LevelManager.level2Over && !LevelManager.level3Over) {
+		if (AllLevelManager.level1Over && AllLevelManager.level2Over && !AllLevelManager.level3Over) {
 			Level1Over ();
 			Level2Over ();
 			Lock_lev3.onClick.AddListener (() =>
 				SceneManager.LoadScene ("Level3"));
 		}
-		if (LevelManager.level1Over && LevelManager.level2Over && LevelManager.level3Over && !LevelManager.level4Over) {
+		if (AllLevelManager.level1Over && AllLevelManager.level2Over && AllLevelManager.level3Over && !AllLevelManager.level4Over) {
 			Level1Over ();
 			Level2Over ();
 			Level3Over ();
 			Lock_lev4.onClick.AddListener (() =>
 				SceneManager.LoadScene ("Level4"));
 		}
-		if (LevelManager.level1Over && LevelManager.level2Over && LevelManager.level3Over && LevelManager.level4Over && !LevelManager.level5Over) {
+		if (AllLevelManager.level1Over && AllLevelManager.level2Over && AllLevelManager.level3Over && AllLevelManager.level4Over && !AllLevelManager.level5Over) {
 			Level1Over ();
 			Level2Over ();
 			Level3Over ();
@@ -48,7 +48,7 @@ public class Map : MonoBehaviour {
 			Lock_lev5.onClick.AddListener (() =>
 				SceneManager.LoadScene ("Level5"));
 		}
-		if (LevelManager.level1Over && LevelManager.level2Over && LevelManager.level3Over && LevelManager.level4Over && LevelManager.level5Over && !LevelManager.level6Over) {
+		if (AllLevelManager.level1Over && AllLevelManager.level2Over && AllLevelManager.level3Over && AllLevelManager.level4Over && AllLevelManager.level5Over && !AllLevelManager.level6Over) {
 			Level1Over ();
 			Level2Over ();
 			Level3Over ();
@@ -57,7 +57,7 @@ public class Map : MonoBehaviour {
 			Lock_lev6.onClick.AddListener (() =>
 				SceneManager.LoadScene ("Level6"));
 		}
-		if (LevelManager.level1Over && LevelManager.level2Over && LevelManager.level3Over && LevelManager.level4Over && LevelManager.level5Over && LevelManager.level6Over) {
+		if (AllLevelManager.level1Over && AllLevelManager.level2Over && AllLevelManager.level3Over && AllLevelManager.level4Over && AllLevelManager.level5Over && AllLevelManager.level6Over) {
 			Level1Over ();
 			Level2Over ();
 			Level3Over ();
