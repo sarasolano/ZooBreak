@@ -41,8 +41,6 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log ("collided with lock");
 			GameManager.Instance.currHint += 1;
 			SceneManager.LoadScene ("Unscramble4");
-
-
 		}
 	
 	}

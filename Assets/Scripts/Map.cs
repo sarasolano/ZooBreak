@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MapScript : MonoBehaviour {
+public class Map : MonoBehaviour {
 
 	// the back button, which takes you back to the avatar scene
 	public Button BackButton;

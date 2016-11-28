@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class AvatarSceneScript : MonoBehaviour {
+public class AvatarScene : MonoBehaviour {
 
 	// the buttons at the bottom of the screen
 	public Button BackButton;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HippoScript : MonoBehaviour {
+public class Hippo : MonoBehaviour {
 
 	public Transform endPos;
 	private Vector3 startPt;

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class StorySceneScript : MonoBehaviour {
+public class StoryScene : MonoBehaviour {
 
 	// the buttons at the bottom of the screen
 	public Button BackButton;

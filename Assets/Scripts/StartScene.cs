@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class StartSceneScript : MonoBehaviour {
+public class StartScene : MonoBehaviour {
 	// the start button, which takes you to the story scene
 	public Button StartButton;
 
