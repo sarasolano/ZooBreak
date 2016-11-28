@@ -21,6 +21,10 @@ public class CameraController : MonoBehaviour {
 		Vector3 up = target.transform.up * 5.5f;
 		Vector3 forward = target.transform.forward * 10.0f;
 		Vector3 needPos = target.transform.position - forward + up;
+		Vector3 tempPos = needPos;
+		tempPos.y = 0.0f;
+		needPos = tempPos;
+
 		transform.position = Vector3.SmoothDamp(transform.position, needPos,
 			ref velocity,0.05f);
 		transform.LookAt (target.transform);
@@ -31,16 +35,13 @@ public class CameraController : MonoBehaviour {
 			Vector3 temp = transform.position;
 			temp.x = Lbound;
 			transform.position = temp;
-			//Debug.DrawLine(
 		}
 		if (transform.position.x > Rbound) {
 			Vector3 temp = transform.position;
 			temp.x = Rbound;
 			transform.position = temp;
 		}
-
-		//hard bounds up and down
-		//not follow character on y
+			
 		//test with different resolutions!
 
 	}
