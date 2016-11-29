@@ -7,13 +7,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class Unscramble : MonoBehaviour {
+public class UnscrambleManager : MonoBehaviour {
 
 	private static string FILENAME = "extra_files/animal_words.txt";
-//	private static Unscramble instance;
 	private List<string> words;
 	private Dictionary<char, List<string>> letterToWords;
 	private Dictionary<string, List<string>> permutations;
+
+	public Hint[] hints;
 
 	void Awake() {
 		words = new List<string> ();
@@ -21,17 +22,6 @@ public class Unscramble : MonoBehaviour {
 		permutations = new Dictionary<string, List<string>> ();
 		SortWords ();
 	}
-
-	// static property of a GameManager 
-//	public static Unscramble Instance {
-//		get { // an instance getter
-//			if (instance == null) {
-////				instance = GameObject.FindGameObjectWithTag ("Unscramble");
-//			}
-//			return instance;
-//		}
-//	}
-//
 
 	// sorts all words in FILENAME
 	private void SortWords() {
