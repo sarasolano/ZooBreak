@@ -1,16 +1,17 @@
 fileFormatVersion: 2
-guid: 4b752774cc85a4e6186f5ac1dff387d3
-timeCreated: 1479400923
+guid: 35ec4eb7239a249049cd4c2ff5b4925a
+timeCreated: 1480440461
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: walking_0
-    21300002: walking_1
-    21300004: walking_2
-    21300006: walking_3
-    21300008: walking_4
-    21300010: walking_5
-    21300012: walking_6
+    21300000: p1_walk_0
+    21300002: p1_walk_1
+    21300004: p1_walk_2
+    21300006: p1_walk_3
+    21300008: p1_walk_4
+    21300010: p1_walk_5
+    21300012: p1_walk_6
+    21300014: p1_walk_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,20 +56,28 @@ TextureImporter:
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings:
-  - buildTarget: Standalone
-    maxTextureSize: 4096
-    textureFormat: -1
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
+  buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: walking_0
+      name: p1_walk_0
       rect:
         serializedVersion: 2
         x: 0
+        y: 2
+        width: 51
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: p1_walk_1
+      rect:
+        serializedVersion: 2
+        x: 177
         y: 4
         width: 59
         height: 238
@@ -78,10 +87,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking_1
+      name: p1_walk_2
       rect:
         serializedVersion: 2
-        x: 84
+        x: 261
         y: 0
         width: 108
         height: 229
@@ -91,10 +100,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking_2
+      name: p1_walk_3
       rect:
         serializedVersion: 2
-        x: 208
+        x: 385
         y: 8
         width: 91
         height: 230
@@ -104,10 +113,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking_3
+      name: p1_walk_4
       rect:
         serializedVersion: 2
-        x: 339
+        x: 516
         y: 7
         width: 74
         height: 231
@@ -117,10 +126,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking_4
+      name: p1_walk_5
       rect:
         serializedVersion: 2
-        x: 445
+        x: 622
         y: 2
         width: 108
         height: 229
@@ -130,10 +139,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking_5
+      name: p1_walk_6
       rect:
         serializedVersion: 2
-        x: 569
+        x: 746
         y: 10
         width: 91
         height: 230
@@ -143,10 +152,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: walking_6
+      name: p1_walk_7
       rect:
         serializedVersion: 2
-        x: 700
+        x: 877
         y: 9
         width: 74
         height: 231

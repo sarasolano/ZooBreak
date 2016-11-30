@@ -42,12 +42,14 @@ public class GondolaManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKey (KeyCode.RightArrow)) {
+	void FixedUpdate () {
+		DateTime now = DateTime.Now;
+		if ((now - curr).TotalSeconds >= 2) {
 			for (int i = 0; i < 5; i++) {
 				SpawnRope ();
 				count++;
 			}
+			curr = now;
 		}
 	}
 

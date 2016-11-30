@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: c1e4a3af9a4954eae81b2712a8253132
-timeCreated: 1480440430
+guid: 512ffa8aa6fa9435892b074eacf8c2d1
+timeCreated: 1480463620
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: p1_jump_0
-    21300002: p1_jump_1
-    21300004: p1_jump_2
-    21300006: p1_jump_3
-    21300008: p1_jump_4
-    21300010: p1_jump_5
-    21300012: p1_jump_6
+    21300000: lion_walking_0
+    21300002: lion_walking_1
+    21300004: lion_walking_2
+    21300006: lion_walking_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,25 +57,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: p1_jump_0
+      name: lion_walking_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 51
-        height: 242
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: p1_jump_1
-      rect:
-        serializedVersion: 2
-        x: 177
-        y: 1
-        width: 59
+        x: 10
+        y: 55
+        width: 369
         height: 238
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -86,65 +70,39 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: p1_jump_2
+      name: lion_walking_1
       rect:
         serializedVersion: 2
-        x: 285
-        y: 2
-        width: 117
-        height: 197
+        x: 424
+        y: 48
+        width: 388
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: p1_jump_3
+      name: lion_walking_2
       rect:
         serializedVersion: 2
-        x: 446
-        y: 73
-        width: 133
-        height: 234
+        x: 880
+        y: 46
+        width: 388
+        height: 214
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: p1_jump_4
+      name: lion_walking_3
       rect:
         serializedVersion: 2
-        x: 646
-        y: 126
-        width: 111
-        height: 199
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: p1_jump_5
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 62
-        width: 96
-        height: 233
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: p1_jump_6
-      rect:
-        serializedVersion: 2
-        x: 955
-        y: 1
-        width: 96
-        height: 196
+        x: 1334
+        y: 49
+        width: 381
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
