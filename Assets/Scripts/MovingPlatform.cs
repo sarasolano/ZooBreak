@@ -23,6 +23,12 @@ public class MovingPlatform : MonoBehaviour {
 		Move ();
 	}
 
+	void OnCollisionEnter (Collision col) {
+		if(col.gameObject.name == "prop_powerCube")
+		{
+			Destroy(col.gameObject);
+		}
+	}
 
 	private void Move(){
 		child.localPosition = Vector3.MoveTowards (child.localPosition, nextPos, speed * Time.deltaTime);
