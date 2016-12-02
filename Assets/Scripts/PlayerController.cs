@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour {
 		if (other.CompareTag ("Hippo")) {
 			this.transform.position = startPos;
 		}
+		if (other.CompareTag ("Banana")) {
+			this.transform.position = startPos;
+		}
 		if (other.CompareTag ("Pond")) {
 			StartCoroutine(Sinking());
 		}
