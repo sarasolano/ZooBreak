@@ -34,10 +34,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.CompareTag ("Hippo")) {
-			this.transform.position = startPos;
-		}
-		if (other.CompareTag ("Banana")) {
+		if (other.CompareTag ("Enemy")) {
 			this.transform.position = startPos;
 		}
 		if (other.CompareTag ("Pond")) {

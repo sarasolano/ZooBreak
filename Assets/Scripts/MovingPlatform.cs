@@ -41,4 +41,16 @@ public class MovingPlatform : MonoBehaviour {
 	private void ChangeDest() {
 		nextPos = nextPos != posA ? posA : posB;
 	}
+
+	void OnCollisionStay2D(Collision2D c) {
+		if (c.gameObject.CompareTag ("Player")) {
+			c.gameObject.transform.parent = transform;
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D c) {
+		if (c.gameObject.CompareTag ("Player")) {
+			c.gameObject.transform.parent = null;
+		}
+	}
 }
