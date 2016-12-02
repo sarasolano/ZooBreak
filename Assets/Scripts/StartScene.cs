@@ -10,6 +10,6 @@ public class StartScene : MonoBehaviour {
 	//This initializes the button so that when you click it, you start the game 
 	void Start () {
 		StartButton.onClick.AddListener (() =>
-			SceneManager.LoadScene ("StoryScene"));
+			SceneManager.LoadScene ("StoryScene1"));
 	}
 }

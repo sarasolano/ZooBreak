@@ -30,7 +30,7 @@ public class AvatarScene : MonoBehaviour {
 	//This initializes the button so that when you click it, you go to the appropriate scene 
 	void Start () {
 		BackButton.onClick.AddListener (() =>
-			SceneManager.LoadScene ("StoryScene"));
+			SceneManager.LoadScene ("StoryScene2"));
 		
 		MapButton.onClick.AddListener (() =>
 			SceneManager.LoadScene ("MainMap"));
