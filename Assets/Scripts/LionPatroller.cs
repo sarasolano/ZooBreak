@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Lion : MonoBehaviour {
+public class LionPatroller : MonoBehaviour {
 
 	private Animator anim;
 	private Rigidbody2D rb;
@@ -22,31 +22,17 @@ public class Lion : MonoBehaviour {
 		}
 	}
 
-
 	void FixedUpdate () {
-		float move = Input.GetAxis ("Horizontal");
 		anim.SetFloat("Speed", 1);
+	}
 
-		//check which direction the character is facing
-		if (move > 0 && !right) {
-			Flip ();
-		} else if (move < 0 && right) {
+	void OnTriggerEnter2D ( Collider2D other) {
+		if (other.CompareTag ("Edge")) {
 			Flip ();
 		}
 	}
 
-	void OnTriggerEnter2D ( Collider2D other) {
-//		if (other.CompareTag ("Left")) {
-//			Flip ();
-//		}
-//
-//		if (other.CompareTag ("Right")) {
-//			Flip ();
-//		}
-			
-	}
-
-
+	//when lion reaches the end of its patrol section, it turns around 
 	void Flip() {
 		right = !right;
 		Vector3 scale = transform.localScale;
