@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LionController : MonoBehaviour {
+public class Lion : MonoBehaviour {
 
 	private Animator anim;
 	private Rigidbody2D rb;
@@ -24,7 +24,6 @@ public class LionController : MonoBehaviour {
 
 
 	void FixedUpdate () {
-		//TODO: FIGURE OUT HOW TO SET SPEED WHEN IT'S AUTOMATICALLY MOVING
 		float move = Input.GetAxis ("Horizontal");
 		anim.SetFloat("Speed", 1);
 

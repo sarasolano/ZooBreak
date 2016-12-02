@@ -36,8 +36,8 @@ public class GondolaManager : MonoBehaviour {
 
 		gondolas = new Stack<GameObject> ();
 		for (int i = 0; i < 30; i++) {
-			SpawnRope ();
 			count++;
+			SpawnRope ();
 		}
 	}
 	

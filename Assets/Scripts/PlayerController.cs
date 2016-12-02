@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
 
 	public float maxSpeed;
-	bool right = true;
-
-
-	bool ground = false;
-	public Transform isGround;
-	float grRadius = 0.2f;
 	public float jumpForce = 200f;
 	public LayerMask wiGround;
+	public Transform isGround;
+
+	private Vector3 startPos;
+
+	bool right = true;
+	bool ground = false;
+	float grRadius = 0.2f;
 
 	Animator anim;
 	Rigidbody2D rb;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
+		startPos = this.transform.position;
 	}
 
 	void Update() {
@@ -32,17 +34,26 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		//if you fall off the screen
-		if (other.CompareTag ("Border")) {
-			Debug.Log("you ded start level over");
+		if (other.CompareTag ("Hippo")) {
+			this.transform.position = startPos;
 		}
-
-		if (other.CompareTag ("Lock")) {
-			Debug.Log ("collided with lock");
-			SceneManager.LoadScene ("Unscramble4");
+		if (other.CompareTag ("Pond")) {
+			StartCoroutine(Sinking());
 		}
 	
 	}
+
+	IEnumerator Sinking() {
+		yield return new WaitForSeconds(2);
+		this.transform.position = startPos;
+	}
+
+
+
+	void sinkHelper(){
+
+	}
+
 
 	// Update is called once per frame
 	void FixedUpdate () {
