@@ -14,7 +14,7 @@ public class GondolaManager : MonoBehaviour {
 	private Stack<GameObject> gondolas;
 
 	[SerializeField]
-	private GameObject currentRope;
+	public GameObject currentRope;
 
 	public Transform firstRope;
 
@@ -33,22 +33,28 @@ public class GondolaManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		curr = DateTime.Now;
-
 		gondolas = new Stack<GameObject> ();
 		for (int i = 0; i < 30; i++) {
 			count++;
 			SpawnRope ();
+
+			if (count % 3 == 0) {
+				SpawnGondola (currentRope.transform);
+			}
 		}
+		SpawnGondola (firstRope);
 	}
-	
-	// Update is called once per frame
+
 	void FixedUpdate () {
 		DateTime now = DateTime.Now;
-		if ((now - curr).TotalSeconds >= 2) {
-			for (int i = 0; i < 5; i++) {
+		if ((now - curr).TotalSeconds >= 4) {
+			SpawnGondola (firstRope);
+
+			for (int i = 0; i < 3; i++) {
 				SpawnRope ();
 				count++;
 			}
+
 			curr = now;
 		}
 	}
@@ -57,15 +63,13 @@ public class GondolaManager : MonoBehaviour {
 		GameObject tmp = Instantiate (rope);
 		tmp.transform.position = currentRope.transform.GetChild (0).position;
 
-		if (count % 5 == 0) {
-			GameObject gon = Instantiate (gondola);
-			gon.transform.parent = currentRope.transform;
-			gon.transform.localPosition = Vector3.zero;
-			gon.transform.localPosition = new Vector3 (0,-1.8f,0);
-		}
-
 		currentRope.GetComponent<Rope> ().next = tmp.transform;
 		currentRope = tmp;
 		currentRope.GetComponent<Rope> ().next = firstRope.transform;
+	}
+
+	private void SpawnGondola(Transform parent) {
+		GameObject gon = Instantiate (gondola);
+		gon.transform.localPosition = new Vector3 (0,-1.8f,0) + parent.position;
 	}
 }

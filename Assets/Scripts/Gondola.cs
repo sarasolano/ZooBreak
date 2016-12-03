@@ -11,18 +11,23 @@ public class Gondola : MonoBehaviour {
 		curr = DateTime.Now;
 	}
 
-	void FixedUpdate() {
-		DateTime now = DateTime.Now;
-		if ((now - curr).TotalSeconds >= 2 && Vector3.Distance (transform.localPosition, Vector3.zero) <= 1.8f) {
-			curr = now;
-			Move ();
+	void Update() {
+		Move ();
+	}
+
+	void OnCollisionStay2D(Collision2D c) {
+		if (c.gameObject.CompareTag ("Player")) {
+			c.gameObject.transform.parent = transform;
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D c) {
+		if (c.gameObject.CompareTag ("Player")) {
+			c.gameObject.transform.parent = null;
 		}
 	}
 
 	private void Move() {
-		Rope parent = transform.parent.gameObject.GetComponent<Rope>();
-		transform.parent = parent.next;
-		transform.localPosition = Vector3.MoveTowards(transform.localPosition, Vector3.zero, speed * Time.deltaTime);
-		transform.localPosition = new Vector3 (0, -1.8f, 0);
+		transform.Translate(Vector3.right * speed * Time.deltaTime);
 	}
 }
