@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	public Transform isGround;
 
 	private Vector3 startPos;
+	private GameObject manager; 
 
 	bool right = true;
 	bool ground = false;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
 		startPos = this.transform.position;
+		manager = GameObject.FindGameObjectWithTag ("LevelManager");
 	}
 
 	void Update() {
@@ -40,18 +42,17 @@ public class PlayerController : MonoBehaviour {
 		if (other.CompareTag ("Pond")) {
 			StartCoroutine(Sinking());
 		}
+		if (other.CompareTag ("BridgeHalf")) {
+			other.gameObject.SetActive (false);
+			GameObject manager = GameObject.FindGameObjectWithTag ("LevelManager");
+			manager.GetComponent<Level5Manager>().CollectBridge ();
+		}
 	
 	}
 
 	IEnumerator Sinking() {
 		yield return new WaitForSeconds(2);
 		this.transform.position = startPos;
-	}
-
-
-
-	void sinkHelper(){
-
 	}
 
 
