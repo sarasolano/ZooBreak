@@ -5,12 +5,6 @@ using System;
 public class Gondola : MonoBehaviour {
 	public float speed;
 
-	private DateTime curr;
-
-	void Start() {
-		curr = DateTime.Now;
-	}
-
 	void Update() {
 		Move ();
 	}

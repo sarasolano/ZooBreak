@@ -11,15 +11,11 @@ public class GondolaManager : MonoBehaviour {
 	public GameObject rope;
 	public GameObject gondola;
 
-	private Stack<GameObject> gondolas;
-
-	[SerializeField]
 	public GameObject currentRope;
 
 	public Transform firstRope;
 
 	private static GondolaManager instance;
-
 
 	public static GondolaManager Instance {
 		get { // an instance getter
@@ -33,8 +29,7 @@ public class GondolaManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		curr = DateTime.Now;
-		gondolas = new Stack<GameObject> ();
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 50; i++) {
 			count++;
 			SpawnRope ();
 
@@ -50,7 +45,7 @@ public class GondolaManager : MonoBehaviour {
 		if ((now - curr).TotalSeconds >= 4) {
 			SpawnGondola (firstRope);
 
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 5; i++) {
 				SpawnRope ();
 				count++;
 			}
@@ -62,7 +57,6 @@ public class GondolaManager : MonoBehaviour {
 	private void SpawnRope() {
 		GameObject tmp = Instantiate (rope);
 		tmp.transform.position = currentRope.transform.GetChild (0).position;
-
 		currentRope.GetComponent<Rope> ().next = tmp.transform;
 		currentRope = tmp;
 		currentRope.GetComponent<Rope> ().next = firstRope.transform;
