@@ -12,9 +12,11 @@ public class UnscrambleManager : MonoBehaviour {
 	private static string FILENAME = "extra_files/animal_words.txt";
 	private List<string> words;
 	private Dictionary<char, List<string>> letterToWords;
-	private Dictionary<string, List<string>> permutations;
 
 	public Text unscramble;
+	public Text finalHintText;
+	public Text cageDoorText;
+
 	public Hint[] hintsTypes;
 	public Transform[] hintSpots;
 
@@ -22,9 +24,12 @@ public class UnscrambleManager : MonoBehaviour {
 	public string currentWord;
 
 	public Hint currentHint;
-	public bool showedTutorial;
+	public CageDoor door;
+	public bool showedTutorial; 
 
 	private static UnscrambleManager instance;
+
+	public StringBuilder finalHint = new StringBuilder();
 
 	public static UnscrambleManager Instance {
 		get { // an instance getter
@@ -39,7 +44,6 @@ public class UnscrambleManager : MonoBehaviour {
 		hints = new List<Hint> ();
 		words = new List<string> ();
 		letterToWords = new Dictionary<char, List<string>> ();
-		permutations = new Dictionary<string, List<string>> ();
 		GetWords ();
 		SpawnObjects ();
 		showedTutorial = false;
@@ -47,21 +51,48 @@ public class UnscrambleManager : MonoBehaviour {
 		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 		par.gameObject.SetActive (false);
+		cageDoorText.transform.parent.gameObject.SetActive (false);
 	}
 		
 	void Update() {
 		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 
-		if (par.gameObject.activeSelf && Input.GetKey(KeyCode.Escape)) {
+		//TODO: 
+		//if currenthint.solved = true 
+			//set coroutine --> par.gameObject.SetActive (false);
+		if (par.gameObject.activeSelf && Input.GetKey(KeyCode.Return)) {
 			par.gameObject.SetActive (false);
 		}
 
+		// if the player guessed a solution of the correct length 
 		if (unscramble.text.Length > 0 && field.text.Length == currentHint.Word().Length) {
 			if (field.text.Equals (currentHint.Word ())) {
 				currentHint.solved = true;
+				currentHint.wrong = false;
+			} else {
+				currentHint.wrong = true;
 			}
 		}
+
+		//check if final hint is correct 
+		field = cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
+		if (field.text.Length == currentWord.Length){
+			if (field.text.Equals (currentWord)) {
+				door.found = true;
+			} else {
+				door.wrong = true;
+			}
+		}
+	}
+
+//	public string FinalHint() {
+//		return finalHint.ToString ();
+//	}
+
+	public void AddToFinal() {
+		finalHint.Append (currentHint.Represent());
+		finalHintText.text = finalHint.ToString ();
 	}
 
 	private void SpawnObjects() {
@@ -72,11 +103,14 @@ public class UnscrambleManager : MonoBehaviour {
 		}
 
 		currentWord = word.Key;
+		InputField field = cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
+		field.characterLimit = currentWord.Length;
+
 
 		Debug.Log (currentWord);
 
 		int j = 0;
-		foreach (int i in generateNRandom(hintSpots.Length, hints.Count)) {
+		foreach (int i in generateNRandom(hintSpots.Length, currentWord.Length)) {
 			hints [j].transform.position = hintSpots [i].position;
 			j++;
 		}
@@ -86,7 +120,7 @@ public class UnscrambleManager : MonoBehaviour {
 	private KeyValuePair<string, List<Hint>> SelectWord() {
 		int r = Random.Range (0, words.Count);
 
-		string w = words [r];
+		string w = "eel";//words [r];
 
 		List<char> cl = new List<char> ();
 		foreach (char c in w) {
