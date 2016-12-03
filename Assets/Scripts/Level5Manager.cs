@@ -24,6 +24,8 @@ public class Level5Manager : MonoBehaviour {
 		AllLevelManager.level5Over = true;
 	}
 
+
+	//takes care of the UI when bridge pieces are collected
 	public void CollectBridge(){
 		Debug.Log ("in collect bridge");
 

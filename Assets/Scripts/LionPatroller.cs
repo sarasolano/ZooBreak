@@ -15,11 +15,7 @@ public class LionPatroller : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (right) {
-			rb.velocity = new Vector2 (speed, rb.velocity.y);
-		} else {
-			rb.velocity = new Vector2 (-speed, rb.velocity.y);
-		}
+		rb.velocity = new Vector2 (speed, rb.velocity.y);
 	}
 
 	void FixedUpdate () {
@@ -38,5 +34,6 @@ public class LionPatroller : MonoBehaviour {
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
 		transform.localScale = scale;
+		speed = -speed;
 	}
 }

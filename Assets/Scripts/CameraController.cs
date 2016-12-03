@@ -31,6 +31,9 @@ public class CameraController : MonoBehaviour {
 		transform.rotation = target.transform.rotation;
 
 
+
+		//these provide bounds so that the camera will stop moving
+		//to the right or left
 		if (transform.position.x < Lbound) {
 			Vector3 temp = transform.position;
 			temp.x = Lbound;
@@ -41,18 +44,7 @@ public class CameraController : MonoBehaviour {
 			temp.x = Rbound;
 			transform.position = temp;
 		}
-			
-		//test with different resolutions!
 
 	}
-	
-//	void OnDrawGizmosSelected() {
-//
-//		// Display the explosion radius when selected
-//		Gizmos.color = new Color(1, 1, 0, 0.75F);
-//		Gizmos.DrawSphere (Vector3(Lbound, 0, 0), 5.0f);
-//	}
-
-
 
 }

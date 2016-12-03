@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+
+	//takes care of what happens if you collide with 
+	//an enemy, the hippo's pond, or the bridge pieces
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.CompareTag ("Enemy")) {
 			this.transform.position = startPos;
@@ -50,6 +53,9 @@ public class PlayerController : MonoBehaviour {
 	
 	}
 
+
+	//this takes care of the sinking if you hit the hippo's pond
+	//you return to the starting position after you "die"
 	IEnumerator Sinking() {
 		yield return new WaitForSeconds(2);
 		this.transform.position = startPos;

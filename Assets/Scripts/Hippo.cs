@@ -8,12 +8,15 @@ public class Hippo : MonoBehaviour {
 	private Vector3 endPt;
 	private float secondsForOneLength = 6.0f;
 
+
+	//sets the positions for hippo movement
 	void Start()
 	{
 		startPt = transform.position;
 		endPt = endPos.position;
 	}
 
+	//makes the hippo bob up and down
 	void Update()
 	{
 		transform.position = Vector3.Lerp(startPt, endPt,

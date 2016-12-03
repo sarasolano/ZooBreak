@@ -16,6 +16,4 @@ public class Level1Manager : MonoBehaviour {
 	void Update () {
 		AllLevelManager.level1Over = true;
 	}
-
-	//when solve hint: 	AllLevelManager.level1Over = true;
 }
