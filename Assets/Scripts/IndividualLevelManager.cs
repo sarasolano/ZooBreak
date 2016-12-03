@@ -3,29 +3,23 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Level5Manager : MonoBehaviour {
-
+public class IndividualLevelManager : MonoBehaviour {
 	public Button MapButton;
 	public GameObject greyHalf1, greyHalf2, half1, half2, bridgeComplete;
-
-
+	public Text loseText;
 
 	private int bridgeCount;
+
 
 	// Use this for initialization
 	void Start () {
 		MapButton.onClick.AddListener (() =>
 			SceneManager.LoadScene ("MainMap"));
-		bridgeCount = 0;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		AllLevelManager.level5Over = true;
-	}
+	//use currLevel and AllLevelManager.level1Over = true;
 
-
-	//takes care of the UI when bridge pieces are collected
+	//takes care of the UI when bridge pieces are collected (level5)
 	public void CollectBridge(){
 		Debug.Log ("in collect bridge");
 
@@ -40,5 +34,17 @@ public class Level5Manager : MonoBehaviour {
 			Debug.Log ("bridge piece 2");
 			bridgeComplete.SetActive (true);
 		}
+	}
+
+	//when an animal/weapon hits you --> text tells you that you die
+	public void SetLoseText(){
+		Debug.Log ("in lose text");
+		StartCoroutine (LoseText ());
+	}
+
+	IEnumerator LoseText(){
+		loseText.text = "You're dead!";
+		yield return new WaitForSeconds(2);
+		loseText.text = "";
 	}
 }

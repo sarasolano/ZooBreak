@@ -15,6 +15,7 @@ public class AllLevelManager  {
 
 	//avatar selection choice 
 	public static int avatar = 1;
+	public static int currLevel = 0;
 
 }
 	

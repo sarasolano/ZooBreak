@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.CompareTag ("Enemy")) {
 			this.transform.position = startPos;
+			manager.GetComponent<IndividualLevelManager> ().SetLoseText ();
+			Debug.Log ("got component");
 		}
 		if (other.CompareTag ("Pond")) {
 			StartCoroutine(Sinking());
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.CompareTag ("BridgeHalf")) {
 			other.gameObject.SetActive (false);
 			GameObject manager = GameObject.FindGameObjectWithTag ("LevelManager");
-			manager.GetComponent<Level5Manager>().CollectBridge ();
+			manager.GetComponent<IndividualLevelManager>().CollectBridge ();
 		}
 	
 	}
