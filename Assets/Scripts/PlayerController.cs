@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour {
 		if (other.CompareTag ("Enemy")) {
 			this.transform.position = startPos;
 			manager.GetComponent<IndividualLevelManager> ().SetLoseText ();
-			Debug.Log ("got component");
 		}
 		if (other.CompareTag ("Pond")) {
 			StartCoroutine(Sinking());
+			manager.GetComponent<IndividualLevelManager> ().SetLoseText ();
 		}
 		if (other.CompareTag ("BridgeHalf")) {
 			other.gameObject.SetActive (false);
