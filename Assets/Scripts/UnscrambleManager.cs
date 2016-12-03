@@ -14,17 +14,118 @@ public class UnscrambleManager : MonoBehaviour {
 	private Dictionary<char, List<string>> letterToWords;
 	private Dictionary<string, List<string>> permutations;
 
-	public Hint[] hints;
+	public Text unscramble;
+	public Hint[] hintsTypes;
+	public Transform[] hintSpots;
+
+	public List<Hint> hints;
+	public string currentWord;
+
+	public Hint currentHint;
+	public bool showedTutorial;
+
+	private static UnscrambleManager instance;
+
+	public static UnscrambleManager Instance {
+		get { // an instance getter
+			if (instance == null) {
+				instance = GameObject.FindObjectOfType<UnscrambleManager> ();
+			}
+			return instance;
+		}
+	}
 
 	void Awake() {
+		hints = new List<Hint> ();
 		words = new List<string> ();
 		letterToWords = new Dictionary<char, List<string>> ();
 		permutations = new Dictionary<string, List<string>> ();
-		SortWords ();
+		GetWords ();
+		SpawnObjects ();
+		showedTutorial = false;
+		currentHint = null;
+		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
+		Text par = field.transform.parent.parent.GetComponent<Text> ();
+		par.gameObject.SetActive (false);
+	}
+		
+	void Update() {
+		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
+		Text par = field.transform.parent.parent.GetComponent<Text> ();
+
+		if (par.gameObject.activeSelf && Input.GetKey(KeyCode.Escape)) {
+			par.gameObject.SetActive (false);
+		}
+
+		if (unscramble.text.Length > 0 && field.text.Length == currentHint.Word().Length) {
+			if (field.text.Equals (currentHint.Word ())) {
+				currentHint.solved = true;
+			}
+		}
 	}
 
-	// sorts all words in FILENAME
-	private void SortWords() {
+	private void SpawnObjects() {
+		KeyValuePair<string, List<Hint>> word = SelectWord ();
+
+		while (word.Key.Length != hints.Count) {
+			word = SelectWord ();
+		}
+
+		currentWord = word.Key;
+
+		Debug.Log (currentWord);
+
+		int j = 0;
+		foreach (int i in generateNRandom(hintSpots.Length, hints.Count)) {
+			hints [j].transform.position = hintSpots [i].position;
+			j++;
+		}
+	}
+
+	// randomized selection of the word for unscramble game
+	private KeyValuePair<string, List<Hint>> SelectWord() {
+		int r = Random.Range (0, words.Count);
+
+		string w = words [r];
+
+		List<char> cl = new List<char> ();
+		foreach (char c in w) {
+			cl.Add (c);
+		}
+
+		// sorts letters depending on how many words contain them
+		cl.Sort (delegate(char c1, char c2) {
+			return letterToWords[c1].Count.CompareTo(letterToWords[c2].Count);
+		});
+
+		int count = 0;
+		foreach (char c in cl) {
+			string s = GetRandomWord (c, w);
+
+			HashSet<int> rand = generateNRandom(s.Length, s.Length);
+
+
+			StringBuilder unscramble = new StringBuilder ();
+			foreach (int i in rand) {
+				unscramble.Append (s[i]);
+			}
+
+			r = Random.Range (0, w.Length);
+			if (hints.Count < count + 1) {
+				Hint h = Instantiate (hintsTypes [r / hintsTypes.Length]).GetComponent<Hint> ();
+				hints.Add (h);
+			}
+
+			Hint hint = hints[count];
+			hint.CreateHint (s, c, unscramble.ToString(), rand);
+
+			count++;
+		}
+		return new KeyValuePair<string, List<Hint>> (w, hints);
+	}
+
+	// gets all words in FILENAME
+	private void GetWords() {
 		string w;
 		StreamReader file = new StreamReader(FILENAME);
 
@@ -43,34 +144,6 @@ public class UnscrambleManager : MonoBehaviour {
 		file.Close ();
 	}
 
-	// randomized selection of the word for unscramble game
-	public KeyValuePair<string, KeyValuePair<string, string>[]> SelectWord() {
-		int r = Random.Range (0, words.Count);
-		string w = words [r];
-		KeyValuePair<string, string>[] unscramble = new KeyValuePair<string, string>[w.Length];
-
-		List<char> cl = new List<char> ();
-		foreach (char c in w) {
-			cl.Add (c);
-		}
-
-		// sorts letters depending on how many words contain them
-		cl.Sort (delegate(char c1, char c2) {
-			return letterToWords[c1].Count.CompareTo(letterToWords[c2].Count);
-		});
-
-		int count = 0;
-		foreach (char c in cl) {
-			string s = GetRandomWord (c, w);
-			List<string> per = GetPermutations (s);
-			r = Random.Range (0, per.Count);
-			unscramble [count] = new KeyValuePair<string, string> (s, per[r]);
-			count++;
-		}
-
-		return new KeyValuePair<string, KeyValuePair<string, string>[]> (w, unscramble);
-	}
-
 	private string GetRandomWord(char c, string baseW) {
 		List<string> l = letterToWords [c];
 		int r = Random.Range (0, l.Count);
@@ -81,46 +154,6 @@ public class UnscrambleManager : MonoBehaviour {
 			s = l [r];
 		} 
 		return s;
-	}
-
-	// gets all the possible permutations for the string if they haven't been generated
-	private List<string> GetPermutations(string s) {
-		if (!permutations.ContainsKey (s))
-			permutations.Add (s, Permute(s.ToCharArray()));
-		return permutations[s];
-	}
-
-	// generates all possible permutations for the array arr
-	private static List<string> Permute(char[] arr) {
-		List<string> toReturn = new List<string> ();
-		int x = arr.Length - 1;
-		Per(arr, arr, 0, x, toReturn);
-		return toReturn;
-	}
-
-	//helper for the permutation method
-	private static void Per(char[] str, char[] a, int k, int m, List<string> list) {
-		if (k == m && !str.Equals(a)) {
-			StringBuilder s = new StringBuilder ();
-			foreach (char c in a) {
-				s.Append (c);
-			}
-			list.Add(s.ToString());
-		}
-		else
-			for (int i = k; i <= m; i++) {
-				Swap(ref a[k], ref a[i]);
-				Per(str, a, k + 1, m, list);
-				Swap(ref a[k], ref a[i]);
-			}
-	}
-
-	// swaps the reference a and b
-	private static void Swap(ref char a, ref char b) {
-		if (a == b) return;
-		a ^= b;
-		b ^= a;
-		a ^= b;
 	}
 
 	// generates n unique random numbers between 0 and max (exclusive)
