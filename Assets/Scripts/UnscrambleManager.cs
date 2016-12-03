@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class UnscrambleManager : MonoBehaviour {
 
-	private static string FILENAME = "extra_files/animal_words.txt";
+	private static string FILENAME = "extra_files/animal_words2.txt";
 	private List<string> words;
 	private Dictionary<char, List<string>> letterToWords;
 
@@ -26,11 +26,12 @@ public class UnscrambleManager : MonoBehaviour {
 	public Hint currentHint;
 	public CageDoor door;
 	public bool showedTutorial; 
-
-	private static UnscrambleManager instance;
-
+	 
+	// the final hint unscrambles
 	public StringBuilder finalHint = new StringBuilder();
 
+	// instance of the manager
+	private static UnscrambleManager instance;
 	public static UnscrambleManager Instance {
 		get { // an instance getter
 			if (instance == null) {
@@ -40,6 +41,7 @@ public class UnscrambleManager : MonoBehaviour {
 		}
 	}
 
+	// initializing variables
 	void Awake() {
 		hints = new List<Hint> ();
 		words = new List<string> ();
@@ -58,7 +60,6 @@ public class UnscrambleManager : MonoBehaviour {
 		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 
-		//TODO: 
 		//if currenthint.solved = true 
 			//set coroutine --> par.gameObject.SetActive (false);
 		if (par.gameObject.activeSelf && Input.GetKey(KeyCode.Return)) {
@@ -70,6 +71,8 @@ public class UnscrambleManager : MonoBehaviour {
 			if (field.text.Equals (currentHint.Word ())) {
 				currentHint.solved = true;
 				currentHint.wrong = false;
+
+
 			} else {
 				currentHint.wrong = true;
 			}
@@ -85,33 +88,38 @@ public class UnscrambleManager : MonoBehaviour {
 			}
 		}
 	}
-
-//	public string FinalHint() {
-//		return finalHint.ToString ();
-//	}
-
+		
 	public void AddToFinal() {
 		finalHint.Append (currentHint.Represent());
 		finalHintText.text = finalHint.ToString ();
 	}
 
+	// spawns hint objects in the scene
 	private void SpawnObjects() {
+		// selects a random word and its hints
 		KeyValuePair<string, List<Hint>> word = SelectWord ();
 
+		// checks if the word is valid for unscramble
 		while (word.Key.Length != hints.Count) {
 			word = SelectWord ();
 		}
 
 		currentWord = word.Key;
+
+		// sets the input field for the last word unscramble to the length limit
 		InputField field = cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
 		field.characterLimit = currentWord.Length;
 
-
 		Debug.Log (currentWord);
 
+		// locates the hint objects 
 		int j = 0;
-		foreach (int i in generateNRandom(hintSpots.Length, currentWord.Length)) {
-			hints [j].transform.position = hintSpots [i].position;
+		HashSet<int> set = generateNRandom (hintSpots.Length, currentWord.Length);
+		Debug.Log (hints.Count);
+		foreach (int i in set) {
+			Debug.Log ("spot: " + i);
+			Transform spot = hintSpots [i];
+			hints [j].transform.position = spot.position;
 			j++;
 		}
 	}
@@ -119,37 +127,36 @@ public class UnscrambleManager : MonoBehaviour {
 	// randomized selection of the word for unscramble game
 	private KeyValuePair<string, List<Hint>> SelectWord() {
 		int r = Random.Range (0, words.Count);
+		string w = words [r]; // Gets a random word from the dictionary
 
-		string w = "eel";//words [r];
-
-		List<char> cl = new List<char> ();
+		List<char> cl = new List<char> (); // the list or chars in the list
 		foreach (char c in w) {
 			cl.Add (c);
 		}
 
-		// sorts letters depending on how many words contain them
+		// sorts letters based on how many words contains each char
 		cl.Sort (delegate(char c1, char c2) {
 			return letterToWords[c1].Count.CompareTo(letterToWords[c2].Count);
 		});
 
-		int count = 0;
+		int count = 0; // counts the chars in cl
 		foreach (char c in cl) {
 			string s = GetRandomWord (c, w);
-
+			//generated random numbers for the unscramble
 			HashSet<int> rand = generateNRandom(s.Length, s.Length);
 
-
+			// the unscrambled word
 			StringBuilder unscramble = new StringBuilder ();
 			foreach (int i in rand) {
 				unscramble.Append (s[i]);
 			}
 
+			// created Hint objects
 			r = Random.Range (0, w.Length);
 			if (hints.Count < count + 1) {
 				Hint h = Instantiate (hintsTypes [r / hintsTypes.Length]).GetComponent<Hint> ();
 				hints.Add (h);
 			}
-
 			Hint hint = hints[count];
 			hint.CreateHint (s, c, unscramble.ToString(), rand);
 
@@ -178,6 +185,7 @@ public class UnscrambleManager : MonoBehaviour {
 		file.Close ();
 	}
 
+	// get a random word from the dictionary based on char c
 	private string GetRandomWord(char c, string baseW) {
 		List<string> l = letterToWords [c];
 		int r = Random.Range (0, l.Count);
@@ -195,7 +203,7 @@ public class UnscrambleManager : MonoBehaviour {
 		HashSet<int> s = new HashSet<int> ();
 		s.Add (Random.Range (0, max));
 		while (s.Count < n) {
-			s.Add (Random.Range (0, n));
+			s.Add (Random.Range (0, max));
 		}
 		return s;
 	}

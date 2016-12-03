@@ -17,6 +17,7 @@ public class Hint : MonoBehaviour {
 		this.word = word;
 		this.represent = represent;
 		this.unscramble = unscramble;
+		field = UnscrambleManager.Instance.unscramble.transform.GetChild (0).GetComponent<InputField> ();
 	}
 
 	void Update() {
@@ -43,7 +44,6 @@ public class Hint : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		if (solved)
 			return;
-		field = UnscrambleManager.Instance.unscramble.transform.GetChild (0).GetComponent<InputField> ();
 
 		UnscrambleManager.Instance.currentHint = this;
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
@@ -51,7 +51,8 @@ public class Hint : MonoBehaviour {
 
 		if (!UnscrambleManager.Instance.showedTutorial) {
 			UnscrambleManager.Instance.showedTutorial = true;
-			par.text = "Unscramble the letters to find the name of an animal. \n Press Esc to exit the editor.";
+			par.text = "Unscramble the letters to find the name of an animal. " +
+				"\n Press Return to exit the editor.";
 		} else {
 			par.text = "";
 		}

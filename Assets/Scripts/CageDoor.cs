@@ -16,7 +16,7 @@ public class CageDoor : MonoBehaviour {
 		if (found) {
 			field.DeactivateInputField ();
 			manager.cageDoorText.color = Color.green;
-			manager.cageDoorText.text = finalHint;
+			manager.cageDoorText.text = manager.currentWord;
 		} else if (wrong) {
 			manager.cageDoorText.color = Color.red;
 		}
@@ -24,6 +24,8 @@ public class CageDoor : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.CompareTag ("Player")) {
+			manager.unscramble.transform.parent.gameObject.SetActive (false);
+
 			finalHint = manager.finalHint.ToString();
 			manager.cageDoorText.transform.parent.gameObject.SetActive (true);
 			InputField field = manager.cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
