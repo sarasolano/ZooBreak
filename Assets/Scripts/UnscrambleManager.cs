@@ -123,8 +123,18 @@ public class UnscrambleManager : MonoBehaviour {
 
 		// locates the hint objects 
 		int j = 0;
-		HashSet<int> set = generateNRandom (hintSpots.Length, currentWord.Length);
+		HashSet<int> set = generateNRandom (hintSpots.Length - 1, currentWord.Length - 1);
+
+		// always set it in the last spot
+		int r = Random.Range (0, currentWord.Length);
+		hints [r].transform.position = hintSpots [hintSpots.Length - 1].position;
+
+		// set everything  else
 		foreach (int i in set) {
+			// check it is j == r --> move to the next spot
+			if (j == r && j++ == hints.Count)
+				return;
+			
 			Transform spot = hintSpots [i];
 			hints [j].transform.position = spot.position;
 			j++;
@@ -235,7 +245,6 @@ public class UnscrambleManager : MonoBehaviour {
 		yield return new WaitForSeconds (delay);
 		cageDoorText.transform.parent.gameObject.SetActive (false);
 		transitionText.gameObject.SetActive (true);
-		Time.timeScale = 0;
 		ChangeLevel ();
 	}
 }
