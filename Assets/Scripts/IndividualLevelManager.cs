@@ -42,12 +42,13 @@ public class IndividualLevelManager : MonoBehaviour {
 		StartCoroutine (LoseText ());
 	}
 	 
+	// choose the avatar selected by player
 	private void chooseAvatar() {
-		Debug.Log (avatars.Length + " ---> " + AllLevelManager.avatar);
 		avatar = Instantiate(avatars [AllLevelManager.avatar]) as GameObject;
 		avatar.transform.position = avatarLoc.position;
 	}
 
+	// the losing text for the level 
 	IEnumerator LoseText(){
 		loseText.text = "You're dead!";
 		yield return new WaitForSeconds(2);
