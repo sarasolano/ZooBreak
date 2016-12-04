@@ -31,7 +31,8 @@ public class CageDoor : MonoBehaviour {
 			InputField field = manager.cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
 			manager.cageDoorText.color = Color.black;
 
-			if (finalHint.Length == manager.currentWord.Length) { // check if all hints for the last puzzle have been found
+			// check if all hints for the last puzzle have been found
+			if (finalHint.Length == manager.currentWord.Length) {
 				manager.cageDoorText.text = finalHint;
 				field.ActivateInputField ();
 			} else { // if hints haven't been found

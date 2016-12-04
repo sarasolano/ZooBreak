@@ -61,7 +61,6 @@ public class UnscrambleManager : MonoBehaviour {
 	}
 		
 	void Update() {
-		Time.timeScale = 1;
 		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 
@@ -83,7 +82,7 @@ public class UnscrambleManager : MonoBehaviour {
 
 		//check if final hint is correct 
 		field = cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
-		if (field.text.Length == currentWord.Length){
+		if (currentWord.Length != 0 && field.text.Length == currentWord.Length){
 			if (field.text.Equals (currentWord)) {
 				door.found = true;
 				if (!inTransition) {
@@ -103,11 +102,14 @@ public class UnscrambleManager : MonoBehaviour {
 
 	// spawns hint objects in the scene
 	private void SpawnObjects() {
+		if (hintSpots.Length == 0) {
+			return;
+		}
 		// selects a random word and its hints
 		KeyValuePair<string, List<Hint>> word = SelectWord ();
 
 		// checks if the word is valid for unscramble
-		while (word.Key.Length != hints.Count) {
+		while (word.Key.Length > hintSpots.Length) {
 			word = SelectWord ();
 		}
 
@@ -214,22 +216,16 @@ public class UnscrambleManager : MonoBehaviour {
 
 	private void ChangeLevel() {
 		if (AllLevelManager.level5Over) {
-			Debug.Log (6);
 			AllLevelManager.level6Over = true;
 		} else if (AllLevelManager.level4Over) {
-			Debug.Log (5);
 			AllLevelManager.level5Over = true;
 		} else if (AllLevelManager.level3Over) {
-			Debug.Log (4);
 			AllLevelManager.level4Over = true;
 		} else if (AllLevelManager.level2Over) {
-			Debug.Log (3);
 			AllLevelManager.level3Over = true;
 		} else if (AllLevelManager.level1Over) {
-			Debug.Log (2);
 			AllLevelManager.level2Over = true;
 		} else {
-			Debug.Log (1);
 			AllLevelManager.level1Over = true;
 		}
 	}
