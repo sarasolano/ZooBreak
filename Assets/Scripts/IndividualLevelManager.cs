@@ -17,8 +17,6 @@ public class IndividualLevelManager : MonoBehaviour {
 			SceneManager.LoadScene ("MainMap"));
 	}
 
-	//use currLevel and AllLevelManager.level1Over = true;
-
 	//takes care of the UI when bridge pieces are collected (level5)
 	public void CollectBridge(){
 		Debug.Log ("in collect bridge");
