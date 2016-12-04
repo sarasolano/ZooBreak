@@ -237,7 +237,5 @@ public class UnscrambleManager : MonoBehaviour {
 		transitionText.gameObject.SetActive (true);
 		Time.timeScale = 0;
 		ChangeLevel ();
-		yield return new WaitForSeconds (delay);
-		SceneManager.LoadScene ("MainMap");
 	}
 }
