@@ -25,24 +25,20 @@ public class IndividualLevelManager : MonoBehaviour {
 
 	//takes care of the UI when bridge pieces are collected (level5)
 	public void CollectBridge(){
-		Debug.Log ("in collect bridge");
 
 		if (bridgeCount == 0) {
-			Debug.Log ("bridge piece 1");
 			greyHalf1.SetActive (false);
 			half1.SetActive (true);
 			bridgeCount++;
 		} else {
 			greyHalf2.SetActive (false);
 			half2.SetActive (true);
-			Debug.Log ("bridge piece 2");
 			bridgeComplete.SetActive (true);
 		}
 	}
 
 	//when an animal/weapon hits you --> text tells you that you die
 	public void SetLoseText(){
-		Debug.Log ("in lose text");
 		StartCoroutine (LoseText ());
 	}
 	 
