@@ -22,6 +22,7 @@ public class UnscrambleManager : MonoBehaviour {
 	// the types of hints and the spots
 	public Hint[] hintsTypes;
 	public Transform[] hintSpots;
+	public Sprite hintDisable;
 
 	public List<Hint> hints;
 	public string currentWord;
@@ -78,6 +79,8 @@ public class UnscrambleManager : MonoBehaviour {
 			if (field.text.Equals (currentHint.Word ())) {
 				currentHint.solved = true;
 				currentHint.wrong = false;
+
+				currentHint.gameObject.GetComponent<SpriteRenderer> ().sprite = hintDisable;
 			} else {
 				currentHint.wrong = true;
 			}
