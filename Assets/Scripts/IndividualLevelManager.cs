@@ -7,9 +7,15 @@ public class IndividualLevelManager : MonoBehaviour {
 	public Button MapButton;
 	public GameObject greyHalf1, greyHalf2, half1, half2, bridgeComplete;
 	public Text loseText;
+	public GameObject[] avatars;
+	public Transform avatarLoc;
 
 	private int bridgeCount;
+	private GameObject avatar;
 
+	void Awake() {
+		chooseAvatar ();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +44,12 @@ public class IndividualLevelManager : MonoBehaviour {
 	public void SetLoseText(){
 		Debug.Log ("in lose text");
 		StartCoroutine (LoseText ());
+	}
+	 
+	private void chooseAvatar() {
+		Debug.Log (avatars.Length + " ---> " + AllLevelManager.avatar);
+		avatar = Instantiate(avatars [AllLevelManager.avatar]) as GameObject;
+		avatar.transform.position = avatarLoc.position;
 	}
 
 	IEnumerator LoseText(){
