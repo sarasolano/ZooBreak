@@ -52,7 +52,7 @@ public class Hint : MonoBehaviour {
 		if (!UnscrambleManager.Instance.showedTutorial) {
 			UnscrambleManager.Instance.showedTutorial = true;
 			par.text = "Unscramble the letters to find the name of an animal. " +
-				"\n Press Return to exit the editor.";
+				"\n Press ESCAPE to exit the editor.";
 		} else {
 			par.text = "";
 		}

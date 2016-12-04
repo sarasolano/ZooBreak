@@ -66,7 +66,7 @@ public class UnscrambleManager : MonoBehaviour {
 
 		//if currenthint.solved = true 
 			//set coroutine --> par.gameObject.SetActive (false);
-		if (par.gameObject.activeSelf && Input.GetKey(KeyCode.Return)) {
+		if (par.gameObject.activeSelf && Input.GetKey(KeyCode.Escape)) {
 			par.gameObject.SetActive (false);
 		}
 
@@ -227,6 +227,7 @@ public class UnscrambleManager : MonoBehaviour {
 	private void ChangeLevel() {
 		if (AllLevelManager.level5Over) {
 			AllLevelManager.level6Over = true;
+			SceneManager.LoadScene ("WinningScene");
 		} else if (AllLevelManager.level4Over) {
 			AllLevelManager.level5Over = true;
 		} else if (AllLevelManager.level3Over) {
