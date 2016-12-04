@@ -132,7 +132,7 @@ public class UnscrambleManager : MonoBehaviour {
 	// randomized selection of the word for unscramble game
 	private KeyValuePair<string, List<Hint>> SelectWord() {
 		int r = Random.Range (0, words.Count);
-		string w = "eel";//words [r]; // Gets a random word from the dictionary
+		string w = words [r]; // Gets a random word from the dictionary
 
 		List<char> cl = new List<char> (); // the list or chars in the list
 		foreach (char c in w) {
