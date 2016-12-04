@@ -134,7 +134,6 @@ public class UnscrambleManager : MonoBehaviour {
 			// check it is j == r --> move to the next spot
 			if (j == r && j++ == hints.Count)
 				return;
-			
 			Transform spot = hintSpots [i];
 			hints [j].transform.position = spot.position;
 			j++;
@@ -170,6 +169,9 @@ public class UnscrambleManager : MonoBehaviour {
 			string s = GetRandomWord (c, w);
 			//generated random numbers for the unscramble
 			HashSet<int> rand = generateNRandom(s.Length, s.Length);
+			while (IsSorted (rand)) {
+				rand = generateNRandom(s.Length, s.Length);
+			}
 
 			// the unscrambled word
 			StringBuilder unscramble = new StringBuilder ();
@@ -188,6 +190,20 @@ public class UnscrambleManager : MonoBehaviour {
 
 			count++;
 		}
+	}
+
+	// checks if a set is sorted
+	private bool IsSorted(HashSet<int> set) {
+		Debug.Log (set);
+		List<int> copy = new List<int>();
+		List<int> other = new List<int> ();
+		int j = 0;
+		foreach (int i in set) {
+			copy.Add(i);
+			other.Add (j);
+			j++;
+		}
+		return copy.Equals (other);
 	}
 
 	// gets all words in FILENAME
