@@ -13,11 +13,13 @@ public class UnscrambleManager : MonoBehaviour {
 	private List<string> words;
 	private Dictionary<char, List<string>> letterToWords;
 
+	// UI Text for the level
 	public Text unscramble;
 	public Text finalHintText;
 	public Text cageDoorText;
 	public Text transitionText;
 
+	// the types of hints and the spots
 	public Hint[] hintsTypes;
 	public Transform[] hintSpots;
 
@@ -44,7 +46,7 @@ public class UnscrambleManager : MonoBehaviour {
 		}
 	}
 
-	// initializing variables
+	// initializing variables and creating
 	void Awake() {
 		hints = new List<Hint> ();
 		words = new List<string> ();
@@ -61,8 +63,9 @@ public class UnscrambleManager : MonoBehaviour {
 	}
 		
 	void Update() {
+		// get the input field for unscramble
 		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
-		Text par = field.transform.parent.parent.GetComponent<Text> ();
+		Text par = field.transform.parent.parent.GetComponent<Text> (); // the parent of the unscrable
 
 		//if currenthint.solved = true 
 			//set coroutine --> par.gameObject.SetActive (false);
@@ -94,7 +97,8 @@ public class UnscrambleManager : MonoBehaviour {
 			}
 		}
 	}
-		
+
+	// adds the current hint answer to the final hint
 	public void AddToFinal() {
 		finalHint.Append (currentHint.Represent());
 		finalHintText.text = finalHint.ToString ();
@@ -106,14 +110,7 @@ public class UnscrambleManager : MonoBehaviour {
 			return;
 		}
 		// selects a random word and its hints
-		KeyValuePair<string, List<Hint>> word = SelectWord ();
-
-		// checks if the word is valid for unscramble
-		while (word.Key.Length > hintSpots.Length) {
-			word = SelectWord ();
-		}
-
-		currentWord = word.Key;
+		SelectWord ();
 
 		// sets the input field for the last word unscramble to the length limit
 		InputField field = cageDoorText.transform.GetChild (0).GetComponent<InputField> ();
@@ -142,9 +139,18 @@ public class UnscrambleManager : MonoBehaviour {
 	}
 
 	// randomized selection of the word for unscramble game
-	private KeyValuePair<string, List<Hint>> SelectWord() {
+	private void SelectWord() {
 		int r = Random.Range (0, words.Count);
 		string w = words [r]; // Gets a random word from the dictionary
+
+		// checks if the word is valid for unscramble
+		while (w.Length > hintSpots.Length) {
+			r = Random.Range (0, words.Count);
+			w = words [r];
+		}
+
+		// make w == currentWord
+		currentWord = w;
 
 		List<char> cl = new List<char> (); // the list or chars in the list
 		foreach (char c in w) {
@@ -168,10 +174,10 @@ public class UnscrambleManager : MonoBehaviour {
 				unscramble.Append (s[i]);
 			}
 
-			// created Hint objects
-			r = Random.Range (0, w.Length);
+			// create Hint objects
 			if (hints.Count < count + 1) {
-				Hint h = Instantiate (hintsTypes [r / hintsTypes.Length]).GetComponent<Hint> ();
+				r = Random.Range (0, hintsTypes.Length);
+				Hint h = Instantiate (hintsTypes [r]).GetComponent<Hint> ();
 				hints.Add (h);
 			}
 			Hint hint = hints[count];
@@ -179,7 +185,6 @@ public class UnscrambleManager : MonoBehaviour {
 
 			count++;
 		}
-		return new KeyValuePair<string, List<Hint>> (w, hints);
 	}
 
 	// gets all words in FILENAME
@@ -197,7 +202,6 @@ public class UnscrambleManager : MonoBehaviour {
 			}
 			words.Add (lower);
 		}
-
 		file.Close ();
 	}
 
@@ -224,6 +228,7 @@ public class UnscrambleManager : MonoBehaviour {
 		return s;
 	}
 
+	// changes the current level when unscramble is finished
 	private void ChangeLevel() {
 		if (AllLevelManager.level5Over) {
 			AllLevelManager.level6Over = true;
@@ -241,7 +246,7 @@ public class UnscrambleManager : MonoBehaviour {
 		}
 	}
 
-	// deactivates a plane and all the objects on it
+	// transitions our of current level
 	IEnumerator Transition(float delay) {
 		yield return new WaitForSeconds (delay);
 		cageDoorText.transform.parent.gameObject.SetActive (false);

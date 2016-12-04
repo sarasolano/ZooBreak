@@ -3,16 +3,17 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+// Constructs a Hint class
 public class Hint : MonoBehaviour {
+	private string word; // the word of the hint
+	private char represent; // the charater the hint represents
+	private string unscramble; // the unscrambled word
+	public bool solved, addedToFinal, wrong; // bools of state
+	private InputField field; // the input field for the unscrambling of the hint 
 
-	private string word;
-	private char represent;
-	private string unscramble;
-	public bool solved, addedToFinal, wrong;
-	private InputField field;
+	private string finalword; // the final word
 
-	private string finalword;
-
+	// creates a hint
 	public void CreateHint(string word, char represent, string unscramble, HashSet<int> unscrambleOrder) {
 		this.word = word;
 		this.represent = represent;
@@ -21,22 +22,22 @@ public class Hint : MonoBehaviour {
 	}
 
 	void Update() {
+		// check if this is the current hint
 		if (UnscrambleManager.Instance.currentHint != this)
 			return;
-		
-		if (solved ) {
+
+		if (solved) { // make unscramble green if solved and change text
 			UnscrambleManager.Instance.unscramble.text = word;
 			UnscrambleManager.Instance.unscramble.color = new Color32 (40, 201, 70, 255);
 			field.DeactivateInputField ();
-			if (!addedToFinal) {
+			if (!addedToFinal) { // add letter to final it hasn't been added
 				UnscrambleManager.Instance.AddToFinal ();
 				addedToFinal = true;
 			}
-
-		} else if (wrong) {
+		} else if (wrong) { // make unscramble red if it is wrong
 			UnscrambleManager.Instance.unscramble.color = Color.red;
-		} else {
-			field.ActivateInputField ();
+		} else { // make unscramble black if normal or hasn't reached word limit
+			field.ActivateInputField (); 
 			UnscrambleManager.Instance.unscramble.color = Color.black;
 		}
 	}
@@ -49,6 +50,7 @@ public class Hint : MonoBehaviour {
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 		par.gameObject.SetActive (true);
 
+		// check if tutorial has already been shown
 		if (!UnscrambleManager.Instance.showedTutorial) {
 			UnscrambleManager.Instance.showedTutorial = true;
 			par.text = "Unscramble the letters to find the name of an animal. " +
@@ -60,6 +62,7 @@ public class Hint : MonoBehaviour {
 		field.text = "";
 		field.characterLimit = word.Length;
 
+		// add the unscramble word
 		UnscrambleManager.Instance.unscramble.text = unscramble;
 
 		Debug.Log (unscramble + " --> " + word + ": " + represent);
