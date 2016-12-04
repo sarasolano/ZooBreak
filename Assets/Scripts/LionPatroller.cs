@@ -15,20 +15,23 @@ public class LionPatroller : MonoBehaviour {
 	}
 	
 	void Update () {
+		//the lion is constantly moving
 		rb.velocity = new Vector2 (speed, rb.velocity.y);
 	}
 
 	void FixedUpdate () {
+		//the lion is constantly moving, so the animation is always set to walking
 		anim.SetFloat("Speed", 1);
 	}
 
 	void OnTriggerEnter2D ( Collider2D other) {
+		//lion turns around when it reaches the end of its patrol section 
 		if (other.CompareTag ("Edge")) {
 			Flip ();
 		}
 	}
 
-	//when lion reaches the end of its patrol section, it turns around 
+	//flips the lion image and changes its speed so it moves to the opposite direction
 	void Flip() {
 		right = !right;
 		Vector3 scale = transform.localScale;

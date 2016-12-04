@@ -11,13 +11,14 @@ public class LionSight : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		//set target 
+		//set target if the lion's sight has collided with the player
 		if (other.tag == "Player") {
 			lion.Target = other.gameObject;
 		} 
 	}
 
 	void OnTriggerExit2D(Collider2D other){
+		//set target to null when the player leaves the lion's sight
 		if(other.tag == "Player"){
 			lion.Target = null;
 		}
