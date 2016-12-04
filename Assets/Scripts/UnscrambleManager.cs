@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class UnscrambleManager : MonoBehaviour {
 
-	private static string FILENAME = "extra_files/animal_words2.txt";
+	public TextAsset filename;
 	private List<string> words;
 	private Dictionary<char, List<string>> letterToWords;
 
@@ -52,6 +52,10 @@ public class UnscrambleManager : MonoBehaviour {
 		hints = new List<Hint> ();
 		words = new List<string> ();
 		letterToWords = new Dictionary<char, List<string>> ();
+	}
+
+	void Start() {
+		Debug.Log (filename);
 		GetWords ();
 		SpawnObjects ();
 		showedTutorial = false;
@@ -79,7 +83,6 @@ public class UnscrambleManager : MonoBehaviour {
 			if (field.text.Equals (currentHint.Word ())) {
 				currentHint.solved = true;
 				currentHint.wrong = false;
-
 				currentHint.gameObject.GetComponent<SpriteRenderer> ().sprite = hintDisable;
 			} else {
 				currentHint.wrong = true;
@@ -194,7 +197,6 @@ public class UnscrambleManager : MonoBehaviour {
 
 	// checks if a set is sorted
 	private bool IsSorted(HashSet<int> set) {
-		Debug.Log (set);
 		List<int> copy = new List<int>();
 		List<int> other = new List<int> ();
 		int j = 0;
@@ -209,7 +211,7 @@ public class UnscrambleManager : MonoBehaviour {
 	// gets all words in FILENAME
 	private void GetWords() {
 		string w;
-		StreamReader file = new StreamReader(FILENAME);
+		StringReader file = new StringReader(filename.text);
 
 		while ((w = file.ReadLine ()) != null) {
 			string lower = w.ToLower ();
