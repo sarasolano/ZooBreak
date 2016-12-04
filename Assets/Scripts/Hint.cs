@@ -67,7 +67,7 @@ public class Hint : MonoBehaviour {
 
 	public string Word() {
 		return word;
-	}
+	} 
 
 	public char Represent() {
 		return represent;

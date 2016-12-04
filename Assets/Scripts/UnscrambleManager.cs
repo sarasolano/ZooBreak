@@ -16,6 +16,7 @@ public class UnscrambleManager : MonoBehaviour {
 	public Text unscramble;
 	public Text finalHintText;
 	public Text cageDoorText;
+	public Text transitionText;
 
 	public Hint[] hintsTypes;
 	public Transform[] hintSpots;
@@ -25,7 +26,9 @@ public class UnscrambleManager : MonoBehaviour {
 
 	public Hint currentHint;
 	public CageDoor door;
+
 	public bool showedTutorial; 
+	public bool inTransition;
 	 
 	// the final hint unscrambles
 	public StringBuilder finalHint = new StringBuilder();
@@ -54,9 +57,11 @@ public class UnscrambleManager : MonoBehaviour {
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 		par.gameObject.SetActive (false);
 		cageDoorText.transform.parent.gameObject.SetActive (false);
+		transitionText.gameObject.SetActive (false);
 	}
 		
 	void Update() {
+		Time.timeScale = 1;
 		InputField field = unscramble.transform.GetChild (0).GetComponent<InputField> ();
 		Text par = field.transform.parent.parent.GetComponent<Text> ();
 
@@ -71,8 +76,6 @@ public class UnscrambleManager : MonoBehaviour {
 			if (field.text.Equals (currentHint.Word ())) {
 				currentHint.solved = true;
 				currentHint.wrong = false;
-
-
 			} else {
 				currentHint.wrong = true;
 			}
@@ -83,6 +86,10 @@ public class UnscrambleManager : MonoBehaviour {
 		if (field.text.Length == currentWord.Length){
 			if (field.text.Equals (currentWord)) {
 				door.found = true;
+				if (!inTransition) {
+					StartCoroutine (Transition (1));
+					inTransition = true;
+				}
 			} else {
 				door.wrong = true;
 			}
@@ -115,9 +122,7 @@ public class UnscrambleManager : MonoBehaviour {
 		// locates the hint objects 
 		int j = 0;
 		HashSet<int> set = generateNRandom (hintSpots.Length, currentWord.Length);
-		Debug.Log (hints.Count);
 		foreach (int i in set) {
-			Debug.Log ("spot: " + i);
 			Transform spot = hintSpots [i];
 			hints [j].transform.position = spot.position;
 			j++;
@@ -127,7 +132,7 @@ public class UnscrambleManager : MonoBehaviour {
 	// randomized selection of the word for unscramble game
 	private KeyValuePair<string, List<Hint>> SelectWord() {
 		int r = Random.Range (0, words.Count);
-		string w = words [r]; // Gets a random word from the dictionary
+		string w = "eel";//words [r]; // Gets a random word from the dictionary
 
 		List<char> cl = new List<char> (); // the list or chars in the list
 		foreach (char c in w) {
@@ -176,7 +181,6 @@ public class UnscrambleManager : MonoBehaviour {
 				if (!letterToWords.ContainsKey (c)) {
 					letterToWords.Add(c, new List<string>());
 				}
-
 				letterToWords [c].Add (lower);
 			}
 			words.Add (lower);
@@ -206,5 +210,38 @@ public class UnscrambleManager : MonoBehaviour {
 			s.Add (Random.Range (0, max));
 		}
 		return s;
+	}
+
+	private void ChangeLevel() {
+		if (AllLevelManager.level5Over) {
+			Debug.Log (6);
+			AllLevelManager.level6Over = true;
+		} else if (AllLevelManager.level4Over) {
+			Debug.Log (5);
+			AllLevelManager.level5Over = true;
+		} else if (AllLevelManager.level3Over) {
+			Debug.Log (4);
+			AllLevelManager.level4Over = true;
+		} else if (AllLevelManager.level2Over) {
+			Debug.Log (3);
+			AllLevelManager.level3Over = true;
+		} else if (AllLevelManager.level1Over) {
+			Debug.Log (2);
+			AllLevelManager.level2Over = true;
+		} else {
+			Debug.Log (1);
+			AllLevelManager.level1Over = true;
+		}
+	}
+
+	// deactivates a plane and all the objects on it
+	IEnumerator Transition(float delay) {
+		yield return new WaitForSeconds (delay);
+		cageDoorText.transform.parent.gameObject.SetActive (false);
+		transitionText.gameObject.SetActive (true);
+		Time.timeScale = 0;
+		ChangeLevel ();
+		yield return new WaitForSeconds (delay);
+		SceneManager.LoadScene ("MainMap");
 	}
 }
